@@ -12,14 +12,8 @@ def test_positive(user_fixture):
         "name": "test_" + "".join(random.sample(string.ascii_letters, 5)),
         "catalog": random.choice(ACCESSED_CATALOG_ENUM)
     }
-    response = user_fixture.api_client.user.create_user(username, age, address, accessed_catalog)
-    user_id = user_fixture.user_id
+    resp_post = user_fixture.api_client.user.create_user(username, age, address, accessed_catalog)
+    user_id = resp_post.json()["id"]
     response = user_fixture.api_client.user.delete_user(user_id)
 
     assert response.status_code == 200, "Статус код не соответствует ожидаемому"
-
-
-# def test_positive(user_fixture):
-#     user_id = user_fixture.user_id
-#     response = user_fixture.api_client.user.delete_user(user_id)
-#     assert response.status_code == 200, "Статус код не соответствует ожидаемому"
