@@ -5,7 +5,7 @@ import pytest
 
     (["Alina", 22], 22, "KBR, Nalchik", {"name": "Alina_B", "catalog": "international_food"}, 422),
     ("Alina", "age_age", "KBR, Nalchik", {"name": "Alina_B", "catalog": "furniture"}, 422),
-    # ("Alina", -22, "KBR, Nalchik", {"name": "Alina_B", "catalog": "furniture"}, 422),   >>> status code = 200, хотя стоит ограничение на age (min 0)
+    ("Alina", -22, "KBR, Nalchik", {"name": "Alina_B", "catalog": "furniture"}, 422),
     ("Alina", 22, ["KBR", "Nalchik"], {"name": "Alina_B", "catalog": "food"}, 422),
     ("Alina", 22, "KBR, Nalchik", {"name": ["Alina_B"], "catalog": "phones"}, 422),
     ("Alina", 22, "KBR, Nalchik", {"name": "Alina_B", "catalog": "tops"}, 422),
