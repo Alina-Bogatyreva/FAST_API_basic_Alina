@@ -38,6 +38,17 @@ class Application:
     def delete_user_post_condition(self):
         self.api_client.user.delete_user(self.user_id)
 
+    def create_product_precondition(self):
+        name = "autotest_" + "".join(random.sample(string.ascii_letters, 5))
+        price = random.randint(0, 1000000)
+        dimensions = [round(random.uniform(0, 100)) for _ in range(3)]
+        response = self.api_client.product.create_product(name, price, dimensions)
+        assert response.status_code == 200, "can't create product"
+        self.user_id = response.json()["id"]
+
+    def delete_product_post_condition(self):
+        self.api_client.product.delete_product(self.user_id)
+
 
 fixture = Application()
 
@@ -56,3 +67,10 @@ def user_fixture():
     fixture.create_user_precondition()
     yield fixture
     fixture.delete_user_post_condition()
+
+
+@pytest.fixture(scope="session")
+def product_fixture():
+    fixture.create_product_precondition()
+    yield fixture
+    fixture.delete_product_post_condition()
