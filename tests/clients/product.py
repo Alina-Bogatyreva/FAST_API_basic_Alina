@@ -41,7 +41,7 @@ class ProductClient:
         self.print_result(response)
         return response
 
-    def update_employee(self, product_id: int, name: str = None, price: int = None):
+    def update_product(self, product_id: int, name: str = None, price: int = None):
         endpoint = f"{self.url}/product/{product_id}"
         req_dict = {
             "name": name,
@@ -52,7 +52,7 @@ class ProductClient:
         self.print_result(response)
         return response
 
-    def delete_employee(self, product_id: int):
+    def delete_product(self, product_id: int):
         endpoint = f"{self.url}/product/{product_id}"
         response = requests.delete(endpoint)
         self.print_result(response)
