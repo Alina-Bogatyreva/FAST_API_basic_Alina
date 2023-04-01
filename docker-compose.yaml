@@ -13,6 +13,12 @@ services:
       - '80:8000'
     restart: always
 
+    volumes:
+      - volume-python6:/app/storage
+volumes:
+  volume-python6:
+    external: true
+
 
 # docker-compose up -d --build
 # docker-compose down
