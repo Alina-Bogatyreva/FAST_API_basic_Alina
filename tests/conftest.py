@@ -12,6 +12,7 @@ class Application:
     def __init__(self):
         self.employee_id = None
         self.user_id = None
+        self.product_id = None
         self.checkers = CheckerGeneral()
         self.api_client = Client()
 
@@ -47,10 +48,10 @@ class Application:
                       }
         response = self.api_client.product.create_product(name, price, dimensions)
         assert response.status_code == 200, "can't create product"
-        self.user_id = response.json()["id"]
+        self.product_id = response.json()["id"]
 
     def delete_product_post_condition(self):
-        self.api_client.product.delete_product(self.user_id)
+        self.api_client.product.delete_product(self.product_id)
 
 
 fixture = Application()
