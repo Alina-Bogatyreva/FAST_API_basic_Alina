@@ -56,7 +56,6 @@ product_table = Table(
     'products',
     metadata,
     Column("id", Integer, primary_key=True, unique=True, autoincrement=True),
-    # primary_key - первичный ключ, unique - все id уникальный, autoincrement - авто назначение id
     Column("name", String),
     Column("price", FLOAT),
     # Column("tags", String),
@@ -69,6 +68,15 @@ employee_table = Table(
     Column("id", Integer, primary_key=True, unique=True, autoincrement=True),
     Column("name", String),
     Column("role", String)
+)
+
+manufacturer_table = Table(
+    'manufacturers',
+    metadata,
+    Column("id", Integer, primary_key=True, unique=True, autoincrement=True),
+    Column("name", String),
+    Column("address", String),
+    Column("coefficient_sale", FLOAT)
 )
 
 metadata.create_all(bind=engine)
