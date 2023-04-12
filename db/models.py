@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, JSON, ARRAY
+from sqlalchemy import Column, Integer, String, JSON, ARRAY, FLOAT
 from sqlalchemy.orm import DeclarativeBase
 
 
@@ -46,3 +46,14 @@ class Employee(Base):
 
     def __repr__(self):
         return f"{self.id} {self.name} {self.role}"
+
+
+class Manufacturer(Base):
+    __tablename__ = "manufacturers"
+    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
+    name = Column(String, default=None)
+    address = Column(String, default=None)
+    coefficient_sale = Column(FLOAT, default=None)
+
+    def __repr__(self):
+        return f"{self.id} {self.name}"
