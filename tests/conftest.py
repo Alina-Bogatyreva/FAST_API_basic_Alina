@@ -62,7 +62,7 @@ class Application:
 
         response = self.api_client.manufacturer.create_manufacturer(name, address, coefficient_sale)
         assert response.status_code == 200, "can't create product"
-        self.product_id = response.json()["id"]
+        self.manufacturer_id = response.json()["id"]
 
     def delete_manufacturer_post_condition(self):
         self.api_client.manufacturer.delete_manufacturer(self.manufacturer_id)

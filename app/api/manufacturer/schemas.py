@@ -13,7 +13,7 @@ class ManufacturerIn(ManufacturerBase):
 
 class ManufacturerInPut(ManufacturerBase):
     name: str = None
-    address: int = None
+    address: str = None
 
 
 class ManufacturerOut(ManufacturerBase):
