@@ -1,16 +1,16 @@
 import requests
 
-from tests.configuration import url, token
+from tests.configuration import url
 
 
-class EmployeeClient:
+class ProductClient:
     def __init__(self):
         self.url = url
-        self.token = token
 
     @staticmethod
     def print_result(response: requests.Response):
         print("REQUEST INFO")
+        print("METHOD", response.request.method)
         print("URL", response.request.url)
         print("BODY", response.request.body)
 
@@ -18,42 +18,44 @@ class EmployeeClient:
         print("STATUS_CODE", response.status_code)
         print("TEXT", response.text)
 
-    def get_employees(self):
-        endpoint = f"{self.url}/employees"
+    def get_products(self):
+        endpoint = f"{self.url}/products"
         response = requests.get(endpoint)
         self.print_result(response)
         return response
 
-    def get_employee_by_id(self, employee_id: int):
-        endpoint = f"{self.url}/employee/{employee_id}"
+    def get_product_by_id(self, product_id: int):
+        endpoint = f"{self.url}/product/{product_id}"
         response = requests.get(endpoint)
         self.print_result(response)
         return response
 
-    def create_employee(self, name, role):
-        endpoint = f"{self.url}/employee"
+    def create_product(self, name, price, dimensions):
+        endpoint = f"{self.url}/product"
         req_dict = {
             "name": name,
-            "role": role
+            "price": price,
+            "dimensions": dimensions
         }
 
         response = requests.post(endpoint, json=req_dict)
         self.print_result(response)
         return response
 
-    def update_employee(self, employee_id: int, name: str = None, role: str = None):
-        endpoint = f"{self.url}/employee/{employee_id}"
+    def update_product(self, product_id: int, name: str = None, price: int = None, dimensions: dict = None):
+        endpoint = f"{self.url}/product/{product_id}"
         req_dict = {
             "name": name,
-            "role": role
+            "price": price,
+            "dimensions": dimensions
         }
 
         response = requests.put(endpoint, json=req_dict)
         self.print_result(response)
         return response
 
-    def delete_employee(self, employee_id: int):
-        endpoint = f"{self.url}/employee/{employee_id}"
+    def delete_product(self, product_id: int):
+        endpoint = f"{self.url}/product/{product_id}"
         response = requests.delete(endpoint)
         self.print_result(response)
         return response

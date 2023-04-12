@@ -12,6 +12,8 @@ class Application:
     def __init__(self):
         self.employee_id = None
         self.user_id = None
+        self.product_id = None
+        self.manufacturer_id = None
         self.checkers = CheckerGeneral()
         self.api_client = Client()
 
@@ -38,6 +40,33 @@ class Application:
     def delete_user_post_condition(self):
         self.api_client.user.delete_user(self.user_id)
 
+    def create_product_precondition(self):
+        name = "autotest_" + "".join(random.sample(string.ascii_letters, 5))
+        price = random.randint(0, 1000000)
+        dimensions = {"length": random.uniform(1, 100000),
+                      "width": random.uniform(1, 100000),
+                      "height": random.uniform(1, 100000)
+                      }
+        response = self.api_client.product.create_product(name, price, dimensions)
+        assert response.status_code == 200, "can't create product"
+        self.product_id = response.json()["id"]
+
+    def delete_product_post_condition(self):
+        self.api_client.product.delete_product(self.product_id)
+
+
+    def create_manufacturer_precondition(self):
+        name = "autotest_" + "".join(random.sample(string.ascii_letters, 5))
+        address = "autotest_" + "".join(random.sample(string.ascii_letters, 5))
+        coefficient_sale = random.uniform(0, 1000000)
+
+        response = self.api_client.manufacturer.create_manufacturer(name, address, coefficient_sale)
+        assert response.status_code == 200, "can't create product"
+        self.product_id = response.json()["id"]
+
+    def delete_manufacturer_post_condition(self):
+        self.api_client.manufacturer.delete_manufacturer(self.manufacturer_id)
+
 
 fixture = Application()
 
@@ -56,3 +85,17 @@ def user_fixture():
     fixture.create_user_precondition()
     yield fixture
     fixture.delete_user_post_condition()
+
+
+@pytest.fixture(scope="session")
+def product_fixture():
+    fixture.create_product_precondition()
+    yield fixture
+    fixture.delete_product_post_condition()
+
+
+@pytest.fixture(scope="session")
+def manufacturer_fixture():
+    fixture.create_manufacturer_precondition()
+    yield fixture
+    fixture.delete_manufacturer_post_condition()
